@@ -1,0 +1,35 @@
+version: '3'
+services:
+  front:
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
+    volumes:
+      - './front:/front'
+    tty: true
+    stdin_open: true
+    ports:
+      - '3000:3000'
+  api:
+    build:
+      context: ./api/
+      dockerfile: Dockerfile
+    volumes:
+      - './api:/api'
+    ports:
+      - '8000:3000'
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+    links:
+      - db
+  db:
+    image: mysql:5.7
+    volumes:
+      - ./db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: root
+    ports:
+      - '3306:3306'

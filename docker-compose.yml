@@ -16,6 +16,9 @@ services:
       dockerfile: Dockerfile
     volumes:
       - './api:/api'
+      - public-data:/api/public
+      - tmp-data:/api/tmp
+      - log-data:/api/log
     ports:
       - '8000:3000'
     tty: true
@@ -33,3 +36,18 @@ services:
       MYSQL_DATABASE: root
     ports:
       - '3306:3306'
+  web:
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile
+    volumes:
+      - public-data:/api/public
+      - tmp-data:/api/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - api
+volumes:
+  public-data:
+  tmp-data:
+  log-data:

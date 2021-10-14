@@ -1,6 +1,8 @@
 # 概要
 dockerでrails ,react ,mysql ,nginx のコンテナを作成しました
 すぐに使い始めることができます。
+railsはapi モードです。
+nginxの設定が一部不要です（404errorの部分など)
 
 # 使用方法
 

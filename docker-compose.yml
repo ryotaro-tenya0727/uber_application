@@ -47,6 +47,8 @@ services:
       - 80:80
     depends_on:
       - api
+#名前付きボリュームをrailsのpumaとnginxで共有することによってソケット通信ができる。
+#publicも共有することによってnginxで404.html などが返せる。今回はapiモードなのでrobots.txtのみ
 volumes:
   public-data:
   tmp-data:

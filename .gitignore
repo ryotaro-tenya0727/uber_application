@@ -27,3 +27,4 @@ api/.byebug_history
 api/config/master.key
 db-data
 front/reactapp/node_modules
+front/reactapp/yarn.lock

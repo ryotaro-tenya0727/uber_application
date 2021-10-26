@@ -1,7 +1,8 @@
-FROM node:16.1.0-stretch-slim
+FROM node:16.12.0
 RUN mkdir /front
-WORKDIR /front/reactapp
+
 COPY . /front
+WORKDIR /front/reactapp
 RUN yarn install
 EXPOSE 3000
 CMD ["yarn","start"]

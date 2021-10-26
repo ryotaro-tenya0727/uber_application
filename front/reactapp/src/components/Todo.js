@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { apiURL } from '../config';
 
 export const fetch = () => {
   return axios
-    .get('http://localhost/issues')
+    .get(`${apiURL}/issues`)
     .then((res) => {
       return res.data;
     })

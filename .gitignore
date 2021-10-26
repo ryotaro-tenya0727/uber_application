@@ -28,3 +28,4 @@ api/config/master.key
 db-data
 front/reactapp/node_modules
 front/reactapp/yarn.lock
+front/reactapp/src/config.js

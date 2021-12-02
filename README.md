@@ -13,10 +13,12 @@ nginxの設定が一部不要です（404errorの部分など)
 ## docker-compose run front yarn install
 docker-compose build の時に、yarn install が実行されない時があるのでその時に実行
 
+## docker-compose up -d
+
 ## docker-compose run api rails db:create
 
 ## docker-compose run api rails db:migrate
 
-## docker-compose up -d
 
-この後に、localhost:8000 でrails の画面。localhost:3000 でReact の画面になる。
+
+この後に、localhost でrails の画面。localhost:3000 でReact の画面になる。

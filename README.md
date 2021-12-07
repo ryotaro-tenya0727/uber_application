@@ -191,3 +191,23 @@ SPAの場合、データはおもにAPIから非同期で取得。つまり、�
 * `apis/restaurants.js`
 * `apis/foods.js`
 * `apis/orders.js`
+
+## reducer
+
+本教材ではReact Hooksを使います。世間一般ではreduxなどのデータライブラリを用いる場合もありるが、今回はReactの組み込みAPIであるReact Hooksでシンプルにデータを保持できるようにする。
+
+React HooksのなかでもuseReducerはカプセル化の手段として最適。そのreducerもコンポーネント内で定義せず、外部ファイルに閉じ込めてしまう。そうすることで、複数コンポーネントで同じような状態を持ちたい場合に便利である。
+
+* `reducers/restaurants.js`
+* `reducers/foods.js`
+* `reducers/orders.js`
+
+このようにreducersディレクトリを掘って、各種リソースごとのreducerファイルを作成します。
+
+## URLの管理
+
+最後に、APIのURL管理も別ファイルに分けてしまう。これはRailsでURLが`routes.rb`にまとまっているように、フロントエンドでも「ここを参照すれば使われているURLが分かる」という状態を明確にするためである。少し冗長であるが、アプリケーションが大きくなるにつれて、呼ばれるAPIの数も増えていき、管理がしにくくなるという状態を少しでも防ぐために早めに作っておくと良い。
+
+ここでは`urls/index.js`を作成して、ここにAPIのURL文字列を定義していく。
+
+**以上**

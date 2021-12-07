@@ -3,7 +3,7 @@
 # 要件定義・設計
 
 ## 実装する機能、および画面遷移の流れ
-<img src="https://user-images.githubusercontent.com/71915489/145073423-5a22f574-a8cf-453d-bfaf-5d65811ae896.png" width="320">
+<img src="https://user-images.githubusercontent.com/71915489/145073423-5a22f574-a8cf-453d-bfaf-5d65811ae896.png" width="400">
 
 
 ### 店舗一覧画面

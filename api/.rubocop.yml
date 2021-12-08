@@ -7,13 +7,14 @@ require:
 
 AllCops:
   # Rubyバージョン指定
-  TargetRubyVersion: 2.7.3
+  TargetRubyVersion: 2.7.4
   # 除外
   Exclude:
     - 'config.ru'
     - 'bin/**'
     - 'lib/**'
     - 'db/**/*'
+    - 'tmp/**/*'
     - 'config/**/*'
     - 'script/**/*'
     - !ruby/regexp /old_and_unused\.rb$/

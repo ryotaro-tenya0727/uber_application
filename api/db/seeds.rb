@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 Issue.create([
-  {name: "点"},
-  {name: "線"},
-  {name: "面"}
-])
+               { name: '点' },
+               { name: '線' },
+               { name: '面' }
+             ])

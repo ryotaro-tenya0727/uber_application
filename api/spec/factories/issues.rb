@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :issue do
-    name 'MyText'
+    name "MyText"
   end
 end

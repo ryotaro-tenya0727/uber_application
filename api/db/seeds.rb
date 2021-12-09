@@ -5,8 +5,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Issue.create([
-               { name: '点' },
-               { name: '線' },
-               { name: '面' }
-             ])
+3.times do |n|
+  restaurant = Restaurant.new(
+    name: "うまいレストラン_#{n}",
+    fee: 100,
+    time_required: 10,
+  )
+
+  12.times do |m|
+    restaurant.foods.build(
+      name: "うますぎる商品_#{m}",
+      price: 500,
+      description: "フード_#{m}の説明文です。"
+    )
+  end
+
+  restaurant.save!
+end

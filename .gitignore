@@ -29,3 +29,4 @@ db-data
 front/reactapp/node_modules
 front/reactapp/yarn.lock
 front/reactapp/src/config.js
+front/reactapp/package-lock.json

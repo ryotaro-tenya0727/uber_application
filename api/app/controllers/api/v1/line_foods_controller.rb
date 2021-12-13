@@ -20,7 +20,7 @@ module Api
 
       def create
         if LineFood.active.other_restaurant(@ordered_food.restaurant.id).exists?
-          #returnがあるのでここで処理が終わる。新しい注文は仮注文に保存されない
+          #returnがあるのでここで全体の処理が終わる。新しい注文は仮注文に保存されない
           return render json: {
             existing_restaurant: LineFood.other_restaurant(@ordered_food.restaurant.id).first.restaurant.name,
             new_restaurant: Food.find(params[:food_id]).restaurant.name,
@@ -63,6 +63,8 @@ module Api
       def set_line_food(ordered_food)
         if ordered_food.line_food.present?
           @line_food = ordered_food.line_food
+          #ここでは保存されない。
+          #オブジェクトの変更をしただけで、DBには保存されていない
           @line_food.attributes = {
             count: ordered_food.line_food.count + params[:count],
             active: true

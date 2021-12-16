@@ -1,8 +1,14 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 
 // apis
 import { fetchRestaurants } from '../apis/restaurants';
+
+import {
+  initialState,
+  restaurantsActionTypes,
+  restaurantsReducer,
+} from '../reducers/restaurants';
 
 // images
 import MainLogo from '../images/logo.png';
@@ -27,8 +33,20 @@ const MainCover = styled.img`
 `;
 
 const Restaurants = () => {
+  const [state, dispatch] = useReducer(restaurantsReducer, initialState);
+
   useEffect(() => {
-    fetchRestaurants().then((data) => console.log(data));
+    dispatch({ type: restaurantsActionTypes.FETCHING });
+    //この時点でのstateは{fetchState: 'LOADING',restaurantsList: []}
+    fetchRestaurants().then((data) =>
+      dispatch({
+        type: restaurantsActionTypes.FETCH_SUCCESS,
+        payload: {
+          //data.restaurantsはrestaurantのオブジェクトが配列になったもの。
+          restaurants: data.restaurants,
+        },
+      })
+    );
   }, []);
   return (
     <Fragment>
@@ -38,6 +56,9 @@ const Restaurants = () => {
       <MainCoverImageWrapper>
         <MainCover src={MainCoverImage} alt='main cover' />
       </MainCoverImageWrapper>
+      {state.restaurantsList.map((restaurant) => (
+        <div key={restaurant.id}>{restaurant.name}</div>
+      ))}
     </Fragment>
   );
 };

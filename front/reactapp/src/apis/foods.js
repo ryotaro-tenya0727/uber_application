@@ -1,3 +1,4 @@
+//フードのデータを取ってくる時のAPI
 import axios from 'axios';
 import { foodsIndex } from '../urls/index';
 

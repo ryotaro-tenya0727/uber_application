@@ -69,6 +69,11 @@ const ItemWrapper = styled.div`
   margin: 16px;
 `;
 
+const submitOrder = () => {
+  // 後ほど仮注文のAPIを実装します
+  console.log('登録ボタンが押された！');
+};
+
 const Foods = () => {
   const [foodsState, dispatch] = useReducer(foodsReducer, foodsInitialState);
   const [state, setState] = useState(initialState);
@@ -102,7 +107,7 @@ const Foods = () => {
                 <Skeleton
                   key={i}
                   variant='rectangular'
-                  width={450}
+                  width={400}
                   height={180}
                 />
               </ItemWrapper>
@@ -128,12 +133,30 @@ const Foods = () => {
       </FoodsList>
       {state.isOpenOrderDialog && (
         <FoodOrderDialog
-          food={state.selectedFood}
           isOpen={state.isOpenOrderDialog}
+          food={state.selectedFood}
+          countNumber={state.selectedFoodCount}
+          onClickCountUp={() =>
+            setState({
+              ...state,
+              selectedFoodCount: state.selectedFoodCount + 1,
+            })
+          }
+          onClickCountDown={() =>
+            setState({
+              ...state,
+              selectedFoodCount: state.selectedFoodCount - 1,
+            })
+          }
+          // 先ほど作った関数を渡します
+          onClickOrder={() => submitOrder()}
+          // モーダルを閉じる時はすべてのstateを初期化する
           onClose={() =>
             setState({
               ...state,
               isOpenOrderDialog: false,
+              selectedFood: null,
+              selectedFoodCount: 1,
             })
           }
         />

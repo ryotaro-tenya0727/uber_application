@@ -1,3 +1,4 @@
+//リクエスト状態の定数をインポート
 import { REQUEST_STATE } from '../constant/constants';
 
 export const initialState = {

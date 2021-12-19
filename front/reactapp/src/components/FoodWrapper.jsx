@@ -1,4 +1,4 @@
-//フードを表示する一つ一つのカード
+//フードを表示する一つ一つのカード。Food.jsxから呼ばれる。
 import React from 'react';
 import styled from 'styled-components';
 
@@ -10,9 +10,9 @@ import { COLORS } from '../constant/style_constants';
 
 const Wrapper = styled.div`
   display: flex;
-  width: 450px;
+  width: 400px;
   height: 180px;
-  border-width: 1px;
+  border-width: 3px;
   border-style: solid;
   border-color: ${COLORS.BORDER};
   border-image: initial;
@@ -33,7 +33,7 @@ const PriceWrapper = styled.div`
 `;
 
 const FoodImageNode = styled.img`
-  width: 250px;
+  width: 200px;
 `;
 
 export const FoodWrapper = ({ food, onClickFoodWrapper, imageUrl }) => (

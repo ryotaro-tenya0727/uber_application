@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useReducer } from 'react';
+import React, { Fragment, useEffect, useReducer, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -23,12 +23,22 @@ import { fetchFoods } from '../apis/foods';
 import { REQUEST_STATE } from '../constant/constants';
 import { COLORS } from '../constant/style_constants';
 
-//wrapper
+//フードを表示する一つ一つのカード
 import { FoodWrapper } from '../components/FoodWrapper';
+
+//フードをクリックしたときに表示されるモーダル
+import { FoodOrderDialog } from '../components/FoodOrderDialog';
 
 // images
 import MainLogo from '../images/logo.png';
 import FoodImage from '../images/food-image.jpg';
+
+//モーダルの閉開
+const initialState = {
+  isOpenOrderDialog: false,
+  selectedFood: null,
+  selectedFoodCount: 1,
+};
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -61,6 +71,7 @@ const ItemWrapper = styled.div`
 
 const Foods = () => {
   const [foodsState, dispatch] = useReducer(foodsReducer, foodsInitialState);
+  const [state, setState] = useState(initialState);
   let { restaurantsId } = useParams();
   useEffect(() => {
     dispatch({ type: foodsActionTypes.FETCHING });
@@ -102,13 +113,31 @@ const Foods = () => {
             <ItemWrapper key={food.id}>
               <FoodWrapper
                 food={food}
-                onClickFoodWrapper={(food) => console.log(food)}
+                onClickFoodWrapper={(food) =>
+                  setState({
+                    ...state,
+                    selectedFood: food,
+                    isOpenOrderDialog: true,
+                  })
+                }
                 imageUrl={FoodImage}
               />
             </ItemWrapper>
           ))
         )}
       </FoodsList>
+      {state.isOpenOrderDialog && (
+        <FoodOrderDialog
+          food={state.selectedFood}
+          isOpen={state.isOpenOrderDialog}
+          onClose={() =>
+            setState({
+              ...state,
+              isOpenOrderDialog: false,
+            })
+          }
+        />
+      )}
     </Fragment>
   );
 };

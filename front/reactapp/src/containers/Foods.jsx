@@ -1,7 +1,15 @@
 import React, { Fragment, useEffect, useReducer, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+//他店舗の注文が存在した時のモーダル
+import { NewOrderConfirmDialog } from '../components/NewOrderConfirmDialog';
+
+//仮注文を登録するAPIのURLとこれは他店舗の注文が存在したとき、他店舗の仮注文を論理削除して、新しいものを保存する処理APIのURL
+import { postLineFoods, replaceLineFoods } from '../apis/line_foods';
+
+import { HTTP_STATUS_CODE } from '../constant/constants';
 
 //mui(icon以外)
 import Skeleton from '@mui/material/Skeleton';
@@ -33,11 +41,14 @@ import { FoodOrderDialog } from '../components/FoodOrderDialog';
 import MainLogo from '../images/logo.png';
 import FoodImage from '../images/food-image.jpg';
 
-//モーダルの閉開
+//モーダルの閉開の状態を表す。
 const initialState = {
   isOpenOrderDialog: false,
   selectedFood: null,
   selectedFoodCount: 1,
+  isOpenNewOrderDialog: false,
+  existingResutaurautName: '',
+  newResutaurautName: '',
 };
 
 const HeaderWrapper = styled.div`
@@ -69,15 +80,40 @@ const ItemWrapper = styled.div`
   margin: 16px;
 `;
 
-const submitOrder = () => {
-  // 後ほど仮注文のAPIを実装します
-  console.log('登録ボタンが押された！');
-};
-
 const Foods = () => {
   const [foodsState, dispatch] = useReducer(foodsReducer, foodsInitialState);
   const [state, setState] = useState(initialState);
+  const navigate = useNavigate();
   let { restaurantsId } = useParams();
+
+  const submitOrder = () => {
+    postLineFoods({
+      foodId: state.selectedFood.id,
+      count: state.selectedFoodCount,
+    })
+      .then(() => navigate('/orders'))
+      .catch((e) => {
+        if (e.response.status === HTTP_STATUS_CODE.NOT_ACCEPTABLE) {
+          setState({
+            ...state,
+            isOpenOrderDialog: false,
+            isOpenNewOrderDialog: true,
+            existingResutaurautName: e.response.data.existing_restaurant,
+            newResutaurautName: e.response.data.new_restaurant,
+          });
+        } else {
+          throw e;
+        }
+      });
+  };
+
+  const replaceOrder = () => {
+    replaceLineFoods({
+      foodId: state.selectedFood.id,
+      count: state.selectedFoodCount,
+    }).then(() => navigate('/orders'));
+  };
+
   useEffect(() => {
     dispatch({ type: foodsActionTypes.FETCHING });
     fetchFoods(restaurantsId).then((data) => {
@@ -148,7 +184,8 @@ const Foods = () => {
               selectedFoodCount: state.selectedFoodCount - 1,
             })
           }
-          // 先ほど作った関数を渡します
+          //このsubmitで他店舗の仮注文が存在した場合の処理を記述
+          //この関数は「○点を注文に追加」を押したときに発動
           onClickOrder={() => submitOrder()}
           // モーダルを閉じる時はすべてのstateを初期化する
           onClose={() =>
@@ -159,6 +196,15 @@ const Foods = () => {
               selectedFoodCount: 1,
             })
           }
+        />
+      )}
+      {state.isOpenNewOrderDialog && (
+        <NewOrderConfirmDialog
+          isOpen={state.isOpenNewOrderDialog}
+          onClose={() => setState({ ...state, isOpenNewOrderDialog: false })}
+          existingResutaurautName={state.existingResutaurautName}
+          newResutaurautName={state.newResutaurautName}
+          onClickSubmit={() => replaceOrder()}
         />
       )}
     </Fragment>

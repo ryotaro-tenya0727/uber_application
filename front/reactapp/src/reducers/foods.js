@@ -19,6 +19,8 @@ export const foodsReducer = (state, action) => {
         fetchState: REQUEST_STATE.LOADING,
       };
     case foodsActionTypes.FETCH_SUCCESS:
+      //この時foofinitialstateは
+      //{fetchState: 'OK', foodsList: [フードのオブジェクトが入っている。] }
       return {
         fetchState: REQUEST_STATE.OK,
         foodsList: action.payload.foods,

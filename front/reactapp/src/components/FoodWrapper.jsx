@@ -37,6 +37,17 @@ const FoodImageNode = styled.img`
 `;
 
 export const FoodWrapper = ({ food, onClickFoodWrapper, imageUrl }) => (
+  //クリックした時点でstateが更新される。
+  //次のselectedfood が選択したフードのオブジェクト{id: 1,resutaurant_id: 1,name: ......}になる
+  //isOpenNewOrderDialogはtrueになる。
+  // {
+  //   isOpenOrderDialog: true,
+  //   selectedFood: {id: 1,resutaurant_id: 1,name: ......},
+  //   selectedFoodCount: 1,
+  //   isOpenNewOrderDialog: false,
+  //   existingResutaurautName: '',
+  //   newResutaurautName: '',
+  // }
   <Wrapper onClick={() => onClickFoodWrapper(food)}>
     <FoodDetail>
       {food.name}

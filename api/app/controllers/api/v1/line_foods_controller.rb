@@ -2,6 +2,11 @@ module Api
   module V1
     class LineFoodsController < ApplicationController
       before_action :set_food, only: %i[create replace]
+      # before_action :fake_load only: %i[index]
+
+      # def fake_load
+      #   sleep(1)
+      # end
 
       def index
         line_foods = LineFood.active
